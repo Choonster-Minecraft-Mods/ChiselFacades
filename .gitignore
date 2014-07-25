@@ -4,6 +4,8 @@ eclipse/
 bin/
 .settings/
 lib/*.jar
+.classpath
+.project
 
 # =========================
 # Operating System Files
