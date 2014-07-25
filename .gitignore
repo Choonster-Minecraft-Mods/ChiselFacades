@@ -1,5 +1,9 @@
 .gradle
 build/
+eclipse/
+bin/
+.settings/
+lib/*.jar
 
 # =========================
 # Operating System Files

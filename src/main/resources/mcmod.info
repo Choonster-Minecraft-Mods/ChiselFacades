@@ -1,0 +1,23 @@
+[
+{
+  "modid": "ChiselFacades",
+  "name": "Chisel Facades",
+  "description": "Adds Chisel's blocks as Buildcraft Facades.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Choonster"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "requiredMods": [
+	"BuildCraft|Transport",
+	"Chisel"
+  ],
+  "dependencies": [
+	"BuildCraft|Transport",
+	"Chisel"
+  ]
+}
+]
