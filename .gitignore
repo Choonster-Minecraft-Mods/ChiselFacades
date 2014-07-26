@@ -3,7 +3,7 @@ build/
 eclipse/
 bin/
 .settings/
-lib/*.jar
+libs/*.jar
 .classpath
 .project
 

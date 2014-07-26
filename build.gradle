@@ -13,16 +13,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
+version = "1.6.4-1.0"
 group= "com.choonster.chiselfacades" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ChiselFacades"
 
 minecraft {
 	version = "1.6.4-9.11.1.964"
-}
-
-dependencies {
-    files('libs/CHISEL-1.6.4-1.5.2.jar')
 }
 
 processResources
