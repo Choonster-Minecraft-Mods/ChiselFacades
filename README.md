@@ -1,6 +1,8 @@
 # Chisel Facades
 This is a mod for Minecraft 1.6.4 that adds blocks from [Chisel](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1288400-chisel) as [BuildCraft](http://www.mod-buildcraft.com/) Facades.
 
+You can download it from [Curse](http://curse.com/project/222784).
+
 ## Setting up Forge Gradle
 To set up Forge Gradle, run `gradlew setupDecompWorkspace`.
 
