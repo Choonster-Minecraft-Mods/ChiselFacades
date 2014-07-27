@@ -8,15 +8,17 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 @Mod(modid = Constants.MODID, name = Constants.MODNAME, version = Constants.VERSION, dependencies = "required-after:BuildCraft|Transport;required-after:Chisel")
 public class ChiselFacades {
 
-	@Instance("ChiselFacades")
+	@Instance(Constants.MODID)
 	public static ChiselFacades instance;
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		try {
-			FacadeCreator.init();
+			Logger.info("Creating Facades...");
+			int numFacades = FacadeCreator.init();
+			Logger.info("Successfully created Facades for %d Chisel block variations", numFacades);
 		} catch (Exception e) {
-			Logger.severe("Facade creation failed - %s", e);					
+			Logger.severe(e, "Facade creation failed");
 		}
 	}
 }
