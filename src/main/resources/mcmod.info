@@ -13,11 +13,11 @@
   "screenshots": [],
   "requiredMods": [
 	"BuildCraft|Transport",
-	"Chisel"
+	"chisel"
   ],
   "dependencies": [
 	"BuildCraft|Transport",
-	"Chisel"
+	"chisel"
   ]
 }
 ]
