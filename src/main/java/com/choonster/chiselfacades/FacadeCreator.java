@@ -36,13 +36,26 @@ public class FacadeCreator {
 
 	public static int init() {
 		registerFacade(Chisel.blockMarble);
-		registerFacade(Chisel.blockLimestone);
 		registerFacade(Chisel.blockMarbleSlab);
-		registerFacade(Chisel.blockLimestoneSlab);
+		
+		if (Chisel.oldPillars) {
+			// Old Pillar blocks work, old Pillar slabs are broken
+			registerFacade(Chisel.blockMarblePillar);
+			Logger.info("Old pillars enabled, adding Pillar block Facades");
+		} else {
+			// New Pillar blocks are broken, new Pillar slabs work
+			registerFacade(Chisel.blockMarblePillarSlab);
+			Logger.info("Old Pillars disabled, adding Pillar slab Facades");
+		}
+		
+		registerFacade(Chisel.blockLimestone);
 		registerFacade(Chisel.blockCobblestone);
 		registerFacade(Chisel.blockGlass);
+		
 		registerFacade(Chisel.blockSandstone);
+		registerFacade(Chisel.blockSandSnakestone);
 		registerFacade(Chisel.blockSandstoneScribbles);
+		
 		registerFacade(Chisel.blockConcrete);
 		registerFacade(Chisel.blockIron);
 		registerFacade(Chisel.blockGold);
@@ -53,43 +66,37 @@ public class FacadeCreator {
 		registerFacade(Chisel.blockNetherBrick);
 		registerFacade(Chisel.blockNetherrack);
 		registerFacade(Chisel.blockCobblestoneMossy);
+		
 		registerFacade(Chisel.stoneBrick);
+		registerFacade(Chisel.blockSnakestone);
+		
 		registerFacade(Chisel.blockIce);
+		registerFacade(Chisel.blockIcePillar);
+		
+		for (int i = 0; i < Chisel.blockPlanks.length; i++) {
+			registerFacade(Chisel.blockPlanks[i]);
+		}
+		
 		registerFacade(Chisel.blockObsidian);
+		registerFacade(Chisel.blockObsidianSnakestone);
+		
+		if (Chisel.blockPaneIron !=null){
+			registerFacade(Chisel.blockPaneIron);
+		}
+		
 		registerFacade(Chisel.blockRedstone);
 		registerFacade(Chisel.blockHolystone);
 		registerFacade(Chisel.blockLavastone);
 		registerFacade(Chisel.blockFft);
 		registerFacade(Chisel.blockCarpet);
-		registerFacade(Chisel.blockCarpetFloor);
 		registerFacade(Chisel.blockBookshelf);
 		registerFacade(Chisel.blockTyrian);
 		registerFacade(Chisel.blockDirt);
-		registerFacade(Chisel.blockCloud);
 		registerFacade(Chisel.blockTemple);
 		registerFacade(Chisel.blockTempleMossy);
+		registerFacade(Chisel.blockCloud);
 		registerFacade(Chisel.blockFactory);
-
-		registerFacade(Chisel.blockIcePillar);
-
-		registerFacade(Chisel.blockSnakestone);
-		registerFacade(Chisel.blockSandSnakestone);
-		registerFacade(Chisel.blockObsidianSnakestone);
-
-		for (int i = 0; i < Chisel.blockPlanks.length; i++) {
-			registerFacade(Chisel.blockPlanks[i]);
-		}
-
-		if (Chisel.oldPillars) {
-			// Old Pillar blocks work, old Pillar slabs are broken
-			registerFacade(Chisel.blockMarblePillar);
-			Logger.info("Old pillars enabled, adding Pillar block Facades");
-		} else {
-			// New Pillar blocks are broken, new Pillar slabs work
-			registerFacade(Chisel.blockMarblePillarSlab);
-			Logger.info("Old Pillars disabled, adding Pillar slab Facades");
-		}
-
+		
 		return _numFacades;
 	}
 }
