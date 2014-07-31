@@ -70,7 +70,6 @@ public class FacadeCreator {
 		registerFacade(Chisel.blockTempleMossy);
 		registerFacade(Chisel.blockFactory);
 
-		registerFacade(Chisel.blockMarblePillar);
 		registerFacade(Chisel.blockIcePillar);
 
 		registerFacade(Chisel.blockSnakestone);
@@ -81,12 +80,14 @@ public class FacadeCreator {
 			registerFacade(Chisel.blockPlanks[i]);
 		}
 
-		if (!Chisel.oldPillars) { // New-style pillars are enabled, register
-									// facades for pillar slabs
-			registerFacade(Chisel.blockMarblePillarSlab);
-			Logger.info("New pillars enabled, created pillar slab Facades");
+		if (Chisel.oldPillars) {
+			// Old Pillar blocks work, old Pillar slabs are broken
+			registerFacade(Chisel.blockMarblePillar);
+			Logger.info("Old pillars enabled, adding Pillar block Facades");
 		} else {
-			Logger.info("New pillars disabled, not creating pillar slab Facades");
+			// New Pillar blocks are broken, new Pillar slabs work
+			registerFacade(Chisel.blockMarblePillarSlab);
+			Logger.info("Old Pillars disabled, adding Pillar slab Facades");
 		}
 
 		return _numFacades;
