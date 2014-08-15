@@ -4,8 +4,13 @@ eclipse/
 bin/
 .settings/
 libs/*.jar
+libs/*.zip
 .classpath
 .project
+*.iml
+*.ipr
+*.iws
+
 
 # =========================
 # Operating System Files

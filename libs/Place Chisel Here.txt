@@ -1,1 +1,1 @@
-Place the Chisel mod JAR in this folder.
+Place the deobfuscated builds of Chisel and AutoUtils in this folder.

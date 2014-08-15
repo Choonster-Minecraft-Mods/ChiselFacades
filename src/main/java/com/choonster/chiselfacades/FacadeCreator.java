@@ -1,8 +1,8 @@
 package com.choonster.chiselfacades;
 
-import info.jbcs.minecraft.chisel.BlockSnakestone;
-import info.jbcs.minecraft.chisel.Carvable;
-import info.jbcs.minecraft.chisel.CarvableVariation;
+import info.jbcs.minecraft.chisel.blocks.BlockSnakestone;
+import info.jbcs.minecraft.chisel.core.Carvable;
+import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.Chisel;
 import net.minecraft.block.Block;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -37,25 +37,21 @@ public class FacadeCreator {
 	public static int init() {
 		registerFacade(Chisel.blockMarble);
 		registerFacade(Chisel.blockMarbleSlab);
-		
-		if (Chisel.oldPillars) {
-			// Old Pillar blocks work, old Pillar slabs are broken
-			registerFacade(Chisel.blockMarblePillar);
-			Logger.info("Old pillars enabled, adding Pillar block Facades");
-		} else {
-			// New Pillar blocks are broken, new Pillar slabs work
+
+		registerFacade(Chisel.blockMarblePillar);
+
+		if (!Chisel.oldPillars) { // Old Pillar slabs are broken
 			registerFacade(Chisel.blockMarblePillarSlab);
-			Logger.info("Old Pillars disabled, adding Pillar slab Facades");
 		}
-		
+
 		registerFacade(Chisel.blockLimestone);
 		registerFacade(Chisel.blockCobblestone);
 		registerFacade(Chisel.blockGlass);
-		
+
 		registerFacade(Chisel.blockSandstone);
 		registerFacade(Chisel.blockSandSnakestone);
 		registerFacade(Chisel.blockSandstoneScribbles);
-		
+
 		registerFacade(Chisel.blockConcrete);
 		registerFacade(Chisel.blockIron);
 		registerFacade(Chisel.blockGold);
@@ -66,24 +62,24 @@ public class FacadeCreator {
 		registerFacade(Chisel.blockNetherBrick);
 		registerFacade(Chisel.blockNetherrack);
 		registerFacade(Chisel.blockCobblestoneMossy);
-		
+
 		registerFacade(Chisel.stoneBrick);
 		registerFacade(Chisel.blockSnakestone);
-		
+
 		registerFacade(Chisel.blockIce);
 		registerFacade(Chisel.blockIcePillar);
-		
+
 		for (int i = 0; i < Chisel.blockPlanks.length; i++) {
 			registerFacade(Chisel.blockPlanks[i]);
 		}
-		
+
 		registerFacade(Chisel.blockObsidian);
 		registerFacade(Chisel.blockObsidianSnakestone);
-		
-		if (Chisel.blockPaneIron !=null){
+
+		if (Chisel.blockPaneIron != null) {
 			registerFacade(Chisel.blockPaneIron);
 		}
-		
+
 		registerFacade(Chisel.blockRedstone);
 		registerFacade(Chisel.blockHolystone);
 		registerFacade(Chisel.blockLavastone);
@@ -92,11 +88,12 @@ public class FacadeCreator {
 		registerFacade(Chisel.blockBookshelf);
 		registerFacade(Chisel.blockTyrian);
 		registerFacade(Chisel.blockDirt);
+		registerFacade(Chisel.blockGrass);
 		registerFacade(Chisel.blockTemple);
 		registerFacade(Chisel.blockTempleMossy);
 		registerFacade(Chisel.blockCloud);
 		registerFacade(Chisel.blockFactory);
-		
+
 		return _numFacades;
 	}
 }
