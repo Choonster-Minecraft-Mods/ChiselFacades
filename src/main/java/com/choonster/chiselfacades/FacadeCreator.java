@@ -1,14 +1,12 @@
 package com.choonster.chiselfacades;
 
-import info.jbcs.minecraft.chisel.Chisel;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import info.jbcs.minecraft.chisel.ChiselBlocks;
+import info.jbcs.minecraft.chisel.Configurations;
 import info.jbcs.minecraft.chisel.api.ICarvable;
-import info.jbcs.minecraft.chisel.block.BlockCarvableGlass;
 import info.jbcs.minecraft.chisel.block.BlockSnakestone;
 import info.jbcs.minecraft.chisel.carving.CarvableVariation;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import cpw.mods.fml.common.event.FMLInterModComms;
 
 public class FacadeCreator {
 	private static int _numFacades = 0;
@@ -44,13 +42,13 @@ public class FacadeCreator {
 		// Uses the same structure as the ChiselBlocks.load() method so I don't
 		// miss any blocks
 
-		if (Chisel.featureEnabled("marble")) {
+		if (Configurations.featureEnabled("marble")) {
 			registerFacade(ChiselBlocks.blockMarble);
 
 			registerFacade(ChiselBlocks.blockMarbleSlab);
 
-			if (Chisel.featureEnabled("marblePillar")) {
-				if (Chisel.oldPillars) {
+			if (Configurations.featureEnabled("marblePillar")) {
+				if (Configurations.oldPillars) {
 					// Old Pillar blocks work, old Pillar slabs are broken
 					registerFacade(ChiselBlocks.blockMarblePillar);
 					Logger.info("Old pillars enabled, adding Pillar block Facades");
@@ -62,82 +60,82 @@ public class FacadeCreator {
 			}
 		}
 
-		if (Chisel.featureEnabled("limestone")) {
+		if (Configurations.featureEnabled("limestone")) {
 			registerFacade(ChiselBlocks.blockLimestone);
 
 			// Limestone slabs use the same textures as Limestone blocks, don't
 			// register them
 		}
 
-		if (Chisel.featureEnabled("cobblestone")) {
+		if (Configurations.featureEnabled("cobblestone")) {
 			registerFacade(ChiselBlocks.blockCobblestone);
 		}
 
-		if (Chisel.featureEnabled("glass")) {
+		if (Configurations.featureEnabled("glass")) {
 			registerFacade(ChiselBlocks.blockGlass);
 		}
 
-		if (Chisel.featureEnabled("sandstone")) {
+		if (Configurations.featureEnabled("sandstone")) {
 			registerFacade(ChiselBlocks.blockSandstone);
 
-			if (Chisel.featureEnabled("snakeSandstone")) {
+			if (Configurations.featureEnabled("snakeSandstone")) {
 				registerFacade(ChiselBlocks.blockSandSnakestone);
 			}
 		}
 
-		if (Chisel.featureEnabled("sandstoneScribbles")) {
+		if (Configurations.featureEnabled("sandstoneScribbles")) {
 			registerFacade(ChiselBlocks.blockSandstoneScribbles);
 		}
 
-		if (Chisel.featureEnabled("concrete")) {
+		if (Configurations.featureEnabled("concrete")) {
 			registerFacade(ChiselBlocks.blockConcrete);
 		}
 
-		if (Chisel.featureEnabled("ironBlock")) {
+		if (Configurations.featureEnabled("ironBlock")) {
 			registerFacade(ChiselBlocks.blockIron);
 		}
 
-		if (Chisel.featureEnabled("goldBlock")) {
+		if (Configurations.featureEnabled("goldBlock")) {
 			registerFacade(ChiselBlocks.blockGold);
 		}
 
-		if (Chisel.featureEnabled("diamondBlock")) {
+		if (Configurations.featureEnabled("diamondBlock")) {
 			registerFacade(ChiselBlocks.blockDiamond);
 		}
 
-		if (Chisel.featureEnabled("glowstone")) {
+		if (Configurations.featureEnabled("glowstone")) {
 			registerFacade(ChiselBlocks.blockLightstone);
 		}
 
-		if (Chisel.featureEnabled("lapisBlock")) {
+		if (Configurations.featureEnabled("lapisBlock")) {
 			registerFacade(ChiselBlocks.blockLapis);
 		}
 
-		if (Chisel.featureEnabled("emeraldBlock")) {
+		if (Configurations.featureEnabled("emeraldBlock")) {
 			registerFacade(ChiselBlocks.blockEmerald);
 		}
 
-		if (Chisel.featureEnabled("netherBrick")) {
+		if (Configurations.featureEnabled("netherBrick")) {
 			registerFacade(ChiselBlocks.blockNetherBrick);
 		}
 
-		if (Chisel.featureEnabled("netherRack")) {
+		if (Configurations.featureEnabled("netherRack")) {
 			registerFacade(ChiselBlocks.blockNetherrack);
 		}
 
-		if (Chisel.featureEnabled("cobblestoneMossy")) {
+		if (Configurations.featureEnabled("cobblestoneMossy")) {
 			registerFacade(ChiselBlocks.blockCobblestoneMossy);
 		}
 
-		if (Chisel.featureEnabled("stoneBrick")) {
+		if (Configurations.featureEnabled("stoneBrick")) {
 			registerFacade(ChiselBlocks.stoneBrick);
 		}
 
-		if (Chisel.featureEnabled("snakestone")) {
+		if (Configurations.featureEnabled("snakestone")) {
 			registerFacade(ChiselBlocks.blockSnakestone);
 		}
 
-		if (Chisel.featureEnabled("dirt")) {
+		if (Configurations.featureEnabled("dirt")) {
 			registerFacade(ChiselBlocks.blockDirt);
 		}
 
@@ -146,78 +144,78 @@ public class FacadeCreator {
 		// this renderType on its own, but it doesn't work properly with
 		// Chisel's Ice blocks.
 
-		if (Chisel.featureEnabled("wood")) {
+		if (Configurations.featureEnabled("wood")) {
 			for (int i = 0; i < ChiselBlocks.blockPlanks.length; i++) {
 				registerFacade(ChiselBlocks.blockPlanks[i]);
 			}
 		}
 
-		if (Chisel.featureEnabled("obsidian")) {
+		if (Configurations.featureEnabled("obsidian")) {
 			registerFacade(ChiselBlocks.blockObsidian);
 		}
 
-		if (Chisel.featureEnabled("snakestoneObsidian")) {
+		if (Configurations.featureEnabled("snakestoneObsidian")) {
 			registerFacade(ChiselBlocks.blockObsidianSnakestone);
 		}
 
-		if (Chisel.featureEnabled("ironBars")) {
+		if (Configurations.featureEnabled("ironBars")) {
 			registerFacade(ChiselBlocks.blockPaneIron);
 		}
 
-		if (Chisel.featureEnabled("redstoneBlock")) {
+		if (Configurations.featureEnabled("redstoneBlock")) {
 			registerFacade(ChiselBlocks.blockRedstone);
 		}
 
-		if (Chisel.featureEnabled("holystone")) {
+		if (Configurations.featureEnabled("holystone")) {
 			registerFacade(ChiselBlocks.blockHolystone);
 		}
 
-		if (Chisel.featureEnabled("lavastone")) {
+		if (Configurations.featureEnabled("lavastone")) {
 			registerFacade(ChiselBlocks.blockLavastone);
 		}
 
-		if (Chisel.featureEnabled("fantasy")) {
+		if (Configurations.featureEnabled("fantasy")) {
 			registerFacade(ChiselBlocks.blockFft);
 		}
 
-		if (Chisel.featureEnabled("carpet")) {
+		if (Configurations.featureEnabled("carpet")) {
 			registerFacade(ChiselBlocks.blockCarpet);
 		}
 
-		if (Chisel.featureEnabled("bookshelf")) {
+		if (Configurations.featureEnabled("bookshelf")) {
 			registerFacade(ChiselBlocks.blockBookshelf);
 		}
 
-		if (Chisel.featureEnabled("futuristicArmorPlating")) {
+		if (Configurations.featureEnabled("futuristicArmorPlating")) {
 			registerFacade(ChiselBlocks.blockTyrian);
 		}
 
-		if (Chisel.featureEnabled("templeBlock")) {
+		if (Configurations.featureEnabled("templeBlock")) {
 			registerFacade(ChiselBlocks.blockTemple);
 
-			if (Chisel.featureEnabled("templeBlockMossy")) {
+			if (Configurations.featureEnabled("templeBlockMossy")) {
 				registerFacade(ChiselBlocks.blockTempleMossy);
 			}
 		}
 
-		if (Chisel.featureEnabled("cloud")) {
+		if (Configurations.featureEnabled("cloud")) {
 			registerFacade(ChiselBlocks.blockCloud);
 		}
 
-		if (Chisel.featureEnabled("factory")) {
+		if (Configurations.featureEnabled("factory")) {
 			registerFacade(ChiselBlocks.blockFactory);
 		}
 
-		if (Chisel.featureEnabled("glassStained"))
+		if (Configurations.featureEnabled("glassStained"))
 			for (int i = 0; i < ChiselBlocks.blockStainedGlass.length; i++) {
 				registerFacade(ChiselBlocks.blockStainedGlass[i]);
 			}
 
-		if (Chisel.featureEnabled("paperWall")) {
+		if (Configurations.featureEnabled("paperWall")) {
 			registerFacade(ChiselBlocks.blockPaperwall);
 		}
 
-		if (Chisel.featureEnabled("woolenClay")) {
+		if (Configurations.featureEnabled("woolenClay")) {
 			registerFacade(ChiselBlocks.blockWoolenClay);
 		}
 

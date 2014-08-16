@@ -9,7 +9,7 @@ To set up Forge Gradle, run `gradlew setupDecompWorkspace`.
 To generate an IDE project, run `gradlew eclipse` (for Eclipse) or `gradlew idea` (for IntelliJ IDEA).
 
 ## Building
-Put Chisel-1.7.10-1.5.6.jar in the libs folder and run `gradlew build`.
+Put Chisel-1.7.10-1.5.6a.jar in the libs folder and run `gradlew build`.
 
 ## Running
 To run in your development environment after building, you'll need a dev version of BuildCraft 6.0.x in your mods folder.

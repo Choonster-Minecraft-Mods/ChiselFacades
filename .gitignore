@@ -6,6 +6,9 @@ bin/
 libs/*.jar
 .classpath
 .project
+*.iml
+*.ipr
+*.iws
 
 # =========================
 # Operating System Files

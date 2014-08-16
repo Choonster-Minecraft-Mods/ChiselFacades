@@ -17,17 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-2.0"
+version = "1.7.10-2.1"
 group= "com.choonster.chiselfacades" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ChiselFacades"
 
 minecraft {
     version = "1.7.10-10.13.0.1180"
     assetDir = "eclipse/assets"
-}
-
-dependencies {
-    
 }
 
 processResources
