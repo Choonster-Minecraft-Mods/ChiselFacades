@@ -219,6 +219,10 @@ public class FacadeCreator {
 			registerFacade(ChiselBlocks.blockWoolenClay);
 		}
 
+		if(Configurations.featureEnabled("laboratory")) {
+			registerFacade(ChiselBlocks.blockLaboratory);
+		}
+
 		return _numFacades;
 	}
 }
