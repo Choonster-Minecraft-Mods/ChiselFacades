@@ -51,7 +51,7 @@ public class FacadeCreator {
 				if (Configurations.oldPillars) {
 					// Old Pillar blocks work, old Pillar slabs are broken
 					registerFacade(ChiselBlocks.blockMarblePillar);
-					Logger.info("Old pillars enabled, adding Pillar block Facades");
+					Logger.info("Old Pillars enabled, adding Pillar block Facades");
 				} else {
 					// New Pillar blocks are broken, new Pillar slabs work
 					registerFacade(ChiselBlocks.blockMarblePillarSlab);

@@ -5,7 +5,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 
-@Mod(modid = Constants.MODID, name = Constants.MODNAME, version = Constants.VERSION, dependencies = "required-after:BuildCraft|Transport;required-after:chisel")
+@Mod(modid = Constants.MODID, name = Constants.MODNAME, dependencies = "required-after:BuildCraft|Transport;required-after:chisel")
 public class ChiselFacades {
 
 	@Instance(Constants.MODID)
