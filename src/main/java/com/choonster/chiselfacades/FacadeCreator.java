@@ -1,15 +1,18 @@
 package com.choonster.chiselfacades;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
-import info.jbcs.minecraft.chisel.init.ModBlocks;
 import info.jbcs.minecraft.chisel.Configurations;
 import info.jbcs.minecraft.chisel.api.ICarvable;
 import info.jbcs.minecraft.chisel.block.BlockSnakestone;
 import info.jbcs.minecraft.chisel.carving.CarvableVariation;
+import info.jbcs.minecraft.chisel.init.ModBlocks;
 import net.minecraft.block.Block;
+
+import java.io.PrintWriter;
 
 public class FacadeCreator {
 	private static int _numFacades = 0;
+	private static PrintWriter writer;
 
 	private static void sendFacadeMessage(Block block, int meta) {
 		// I use this instead of block.getUnlocalizedName() because the latter
@@ -20,7 +23,11 @@ public class FacadeCreator {
 
 		FMLInterModComms.sendMessage("BuildCraft|Transport",
 				"add-facade", blockName + "@" + meta);
-		
+
+		if (writer != null) {
+			writer.printf("%s - %d - %d\n", blockName, meta, block.getRenderType());
+		}
+
 		_numFacades++;
 	}
 
@@ -39,8 +46,16 @@ public class FacadeCreator {
 	}
 
 	public static int init() {
-		// Uses the same structure as the ModBlocks.load() method so I don't
-		// miss any blocks
+		if (Config.debugOutputEnabled) {
+			try {
+				writer = new PrintWriter("ChiselFacadesDebug.txt", "UTF-8");
+				writer.println("Name - Meta - RenderType");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Uses the same structure as the ModBlocks.load() method so I don't miss any blocks
 
 		if (Configurations.featureEnabled("marble")) {
 			registerFacade(ModBlocks.marble);
@@ -63,8 +78,7 @@ public class FacadeCreator {
 		if (Configurations.featureEnabled("limestone")) {
 			registerFacade(ModBlocks.limestone);
 
-			// Limestone slabs use the same textures as Limestone blocks, don't
-			// register them
+			// Limestone slabs use the same textures as Limestone blocks, don't register them
 		}
 
 		if (Configurations.featureEnabled("cobblestone")) {
@@ -219,13 +233,19 @@ public class FacadeCreator {
 			registerFacade(ModBlocks.woolenClay);
 		}
 
-		if(Configurations.featureEnabled("laboratory")) {
+		if (Configurations.featureEnabled("laboratory")) {
 			registerFacade(ModBlocks.laboratory);
 		}
 
-		if (Configurations.featureEnabled("pumpkin")){
+		if (Configurations.featureEnabled("pumpkin")) {
 			// This doesn't do anything yet, but carving variations for Pumpkins will probably come in a future version
 			registerFacade(ModBlocks.pumpkin);
+		}
+
+		// BuildCraft automatically adds Void Stone Block and Pillar Facades
+
+		if (writer != null) {
+			writer.close();
 		}
 
 		return _numFacades;
