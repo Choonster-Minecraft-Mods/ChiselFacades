@@ -10,8 +10,7 @@ public class Config {
 	public static void refreshConfig() {
 		debugOutputEnabled = config.getBoolean("debugOutputEnabled", "general", false, "If true, prints debug info to ChiselFacadesDebug.txt");
 
-		if(config.hasChanged())
-		{
+		if (config.hasChanged()) {
 			config.save();
 		}
 	}

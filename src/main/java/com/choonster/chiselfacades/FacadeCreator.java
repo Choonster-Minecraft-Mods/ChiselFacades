@@ -242,7 +242,11 @@ public class FacadeCreator {
 			registerFacade(ModBlocks.pumpkin);
 		}
 
-		// BuildCraft automatically adds Void Stone Block and Pillar Facades
+		if (Configurations.featureEnabled("voidstone")) {
+			registerFacade(ModBlocks.voidstone);
+		}
+
+		// BuildCraft automatically adds Void Stone Pillar Facades
 
 		if (writer != null) {
 			writer.close();
