@@ -7,6 +7,7 @@ import info.jbcs.minecraft.chisel.block.BlockSnakestone;
 import info.jbcs.minecraft.chisel.carving.CarvableVariation;
 import info.jbcs.minecraft.chisel.init.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 
 import java.io.PrintWriter;
 
@@ -15,17 +16,13 @@ public class FacadeCreator {
 	private static PrintWriter writer;
 
 	private static void sendFacadeMessage(Block block, int meta) {
-		// I use this instead of block.getUnlocalizedName() because the latter
-		// returns "tile.marble"; but Chisel registers blocks with
-		// "chisel.marble", so the actual block name BuildCraft expects is
-		// "chisel:chisel.marble" (which this returns)
 		String blockName = Block.blockRegistry.getNameForObject(block);
 
 		FMLInterModComms.sendMessage("BuildCraft|Transport",
 				"add-facade", blockName + "@" + meta);
 
 		if (writer != null) {
-			writer.printf("%s - %d - %d\n", blockName, meta, block.getRenderType());
+			writer.printf("%s - %d - %s\n", blockName, meta, new ItemStack(block, 1, meta).getHasSubtypes());
 		}
 
 		_numFacades++;
@@ -49,7 +46,7 @@ public class FacadeCreator {
 		if (Config.debugOutputEnabled) {
 			try {
 				writer = new PrintWriter("ChiselFacadesDebug.txt", "UTF-8");
-				writer.println("Name - Meta - RenderType");
+				writer.println("Name - Meta - Subtypes");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -240,6 +237,10 @@ public class FacadeCreator {
 		if (Configurations.featureEnabled("pumpkin")) {
 			// This doesn't do anything yet, but carving variations for Pumpkins will probably come in a future version
 			registerFacade(ModBlocks.pumpkin);
+		}
+
+		if(Configurations.featureEnabled("leaves")){
+			registerFacade(ModBlocks.leaf);
 		}
 
 		if (Configurations.featureEnabled("voidstone")) {
