@@ -249,6 +249,10 @@ public class FacadeCreator {
 
 		// BuildCraft automatically adds Void Stone Pillar Facades
 
+		if (Configurations.featureEnabled("waterstone")) {
+			registerFacade(ModBlocks.waterstone);
+		}
+
 		if (writer != null) {
 			writer.close();
 		}

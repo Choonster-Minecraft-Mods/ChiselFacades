@@ -1,6 +1,7 @@
 .gradle
 build/
 eclipse/
+run/
 bin/
 .settings/
 libs/*.jar
