@@ -1,11 +1,11 @@
 package com.choonster.chiselfacades;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
-import info.jbcs.minecraft.chisel.Configurations;
-import info.jbcs.minecraft.chisel.api.ICarvable;
-import info.jbcs.minecraft.chisel.block.BlockSnakestone;
-import info.jbcs.minecraft.chisel.carving.CarvableVariation;
-import info.jbcs.minecraft.chisel.init.ModBlocks;
+import com.cricketcraft.chisel.Configurations;
+import com.cricketcraft.chisel.api.ICarvable;
+import com.cricketcraft.chisel.block.BlockSnakestone;
+import com.cricketcraft.chisel.carving.CarvableVariation;
+import com.cricketcraft.chisel.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
