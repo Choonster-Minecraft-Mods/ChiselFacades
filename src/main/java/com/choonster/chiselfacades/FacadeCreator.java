@@ -1,5 +1,6 @@
 package com.choonster.chiselfacades;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import com.cricketcraft.chisel.Configurations;
 import com.cricketcraft.chisel.api.ICarvable;
@@ -235,22 +236,76 @@ public class FacadeCreator {
 		}
 
 		if (Configurations.featureEnabled("pumpkin")) {
-			// This doesn't do anything yet, but carving variations for Pumpkins will probably come in a future version
-			registerFacade(ModBlocks.pumpkin);
+			for (int i = 0; i < ModBlocks.pumpkin.length; i++){
+				registerFacade(ModBlocks.pumpkin[i]);
+			}
+		}
+
+		if(Configurations.featureEnabled("jackolantern"))
+		{
+			for (int i = 0; i < ModBlocks.jackolantern.length; i++){
+				registerFacade(ModBlocks.jackolantern[i]);
+			}
 		}
 
 		if(Configurations.featureEnabled("leaves")){
 			registerFacade(ModBlocks.leaf);
 		}
 
+		// Can't create Facades for Presents/Chests because they have a non-1.0 bounding box
+
 		if (Configurations.featureEnabled("voidstone")) {
 			registerFacade(ModBlocks.voidstone);
+			registerFacade(ModBlocks.voidstone2);
 		}
 
 		// BuildCraft automatically adds Void Stone Pillar Facades
 
 		if (Configurations.featureEnabled("waterstone")) {
 			registerFacade(ModBlocks.waterstone);
+		}
+
+		if(Configurations.featureEnabled("hexPlating")){
+			registerFacade(ModBlocks.hexPlating);
+		}
+
+		if(Configurations.featureEnabled("fantasy2")){
+			registerFacade(ModBlocks.fantasy2);
+		}
+
+		if(Configurations.featureEnabled("grimstone")){
+			registerFacade(ModBlocks.grimstone);
+		}
+
+		if(Configurations.featureEnabled("technical")){
+			registerFacade(ModBlocks.technical);
+			registerFacade(ModBlocks.technical2);
+		}
+
+		if(Configurations.featureEnabled("bone")){
+			registerFacade(ModBlocks.bone);
+		}
+
+		if(Configurations.featureEnabled("scorching"))
+		{
+			registerFacade(ModBlocks.scorching);
+		}
+
+		if(Configurations.featureEnabled("brickCustom"))
+		{
+			registerFacade(ModBlocks.brickCustom);
+		}
+
+		// Can't create Facades for Torches because they have a non-1.0 bounding box
+
+		if(Configurations.featureEnabled("warningSign"))
+		{
+			registerFacade(ModBlocks.sign);
+		}
+
+		if(Configurations.featureEnabled("arcane") && Loader.isModLoaded("Thaumcraft"))
+		{
+			registerFacade(ModBlocks.arcane);
 		}
 
 		if (writer != null) {
