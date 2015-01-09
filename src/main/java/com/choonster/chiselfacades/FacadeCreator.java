@@ -1,12 +1,12 @@
 package com.choonster.chiselfacades;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import com.cricketcraft.chisel.Configurations;
 import com.cricketcraft.chisel.api.ICarvable;
 import com.cricketcraft.chisel.block.BlockSnakestone;
 import com.cricketcraft.chisel.carving.CarvableVariation;
-import com.cricketcraft.chisel.init.ModBlocks;
+import com.cricketcraft.chisel.config.Configurations;
+import com.cricketcraft.chisel.init.ChiselBlocks;
+import com.cricketcraft.chisel.init.Features;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -30,17 +30,40 @@ public class FacadeCreator {
 	}
 
 	private static <T extends Block & ICarvable> void registerFacade(T block) {
+		boolean hasVariations = false;
+
 		for (int meta = 0; meta <= 15; meta++) {
 			CarvableVariation variation = block.getVariation(meta);
 			if (variation != null) {
+				hasVariations = true;
 				sendFacadeMessage(block, meta);
 			}
 		}
+
+		if (!hasVariations) {
+			Logger.warn("Block has no variations. %s - %s", block.getUnlocalizedName(), block);
+		}
 	}
 
-	private static void registerFacade(BlockSnakestone block) {
-		sendFacadeMessage(block, Constants.SNAKESTONE_HEAD_META);
-		sendFacadeMessage(block, Constants.SNAKESTONE_BODY_META);
+	private static void registerFacadeIfEnabled(Features feature, BlockSnakestone block) {
+		if (feature.enabled()) {
+			sendFacadeMessage(block, Constants.SNAKESTONE_HEAD_META);
+			sendFacadeMessage(block, Constants.SNAKESTONE_BODY_META);
+		}
+	}
+
+	private static <T extends Block & ICarvable> void registerFacadeIfEnabled(Features feature, T block) {
+		if (feature.enabled()) {
+			registerFacade(block);
+		}
+	}
+
+	private static <T extends Block & ICarvable> void registerFacadeIfEnabled(Features feature, T[] blocks) {
+		if (feature.enabled()) {
+			for (int i = 0; i < blocks.length; i++) {
+				registerFacade(blocks[i]);
+			}
+		}
 	}
 
 	public static int init() {
@@ -53,260 +76,174 @@ public class FacadeCreator {
 			}
 		}
 
-		// Uses the same structure as the ModBlocks.load() method so I don't miss any blocks
+		// Ignore AE Certus Quartz and Sky Stone because Chisel doesn't add new variations,
+		// it only cycles through existing ones
 
-		if (Configurations.featureEnabled("marble")) {
-			registerFacade(ModBlocks.marble);
+		registerFacadeIfEnabled(Features.ANDESITE, ChiselBlocks.andesite);
 
-			registerFacade(ModBlocks.marbleSlab);
+		registerFacadeIfEnabled(Features.ARCANE, ChiselBlocks.arcane);
 
-			if (Configurations.featureEnabled("marblePillar")) {
-				if (Configurations.oldPillars) {
-					// Old Pillar blocks work, old Pillar slabs are broken
-					registerFacade(ModBlocks.marblePillar);
-					Logger.info("Old pillars enabled, adding Pillar block Facades");
-				} else {
-					// New Pillar blocks are broken, new Pillar slabs work
-					registerFacade(ModBlocks.marblePillarSlab);
-					Logger.info("Old pillars disabled, adding Pillar slab Facades");
-				}
-			}
-		}
+		// Ignore Auto Chisel, Auto Chisel Upgrades and Ball of Moss because
+		// BC doesn't allow Facades of TileEntity blocks (i.e. Auto Chisel) and the other two are only items
 
-		if (Configurations.featureEnabled("limestone")) {
-			registerFacade(ModBlocks.limestone);
+		registerFacadeIfEnabled(Features.BLOOD_RUNE, ChiselBlocks.bloodRune);
 
-			// Limestone slabs use the same textures as Limestone blocks, don't register them
-		}
+		registerFacadeIfEnabled(Features.BOOKSHELF, ChiselBlocks.bookshelf);
 
-		if (Configurations.featureEnabled("cobblestone")) {
-			registerFacade(ModBlocks.cobblestone);
-		}
+		registerFacadeIfEnabled(Features.BRICK_CUSTOM, ChiselBlocks.brickCustom);
 
-		if (Configurations.featureEnabled("glass")) {
-			registerFacade(ModBlocks.glass);
-		}
+		registerFacadeIfEnabled(Features.CARPET, ChiselBlocks.carpet_block);
 
-		if (Configurations.featureEnabled("sandstone")) {
-			registerFacade(ModBlocks.sandstone);
+		// Ignore Carpet Floor because it uses the same textures as the full block version
 
-			if (Configurations.featureEnabled("snakeSandstone")) {
-				registerFacade(ModBlocks.sandSnakestone);
-			}
-		}
+		registerFacadeIfEnabled(Features.CLOUD, ChiselBlocks.cloud);
 
-		if (Configurations.featureEnabled("sandstoneScribbles")) {
-			registerFacade(ModBlocks.sandstoneScribbles);
-		}
+		registerFacadeIfEnabled(Features.COBBLESTONE, ChiselBlocks.cobblestone);
 
-		if (Configurations.featureEnabled("concrete")) {
-			registerFacade(ModBlocks.concrete);
-		}
+		registerFacadeIfEnabled(Features.COBBLESTONE_MOSSY, ChiselBlocks.mossy_cobblestone);
 
-		if (Configurations.featureEnabled("ironBlock")) {
-			registerFacade(ModBlocks.iron);
-		}
+		registerFacadeIfEnabled(Features.COLORED_SAND, ChiselBlocks.colored_sand);
 
-		if (Configurations.featureEnabled("goldBlock")) {
-			registerFacade(ModBlocks.gold);
-		}
+		registerFacadeIfEnabled(Features.CONCRETE, ChiselBlocks.concrete);
 
-		if (Configurations.featureEnabled("diamondBlock")) {
-			registerFacade(ModBlocks.diamond);
-		}
+		registerFacadeIfEnabled(Features.DIAMOND_BLOCK, ChiselBlocks.diamond_block);
 
-		if (Configurations.featureEnabled("glowstone")) {
-			registerFacade(ModBlocks.lightstone);
-		}
+		registerFacadeIfEnabled(Features.DIORITE, ChiselBlocks.diorite);
 
-		if (Configurations.featureEnabled("lapisBlock")) {
-			registerFacade(ModBlocks.lapis);
-		}
+		registerFacadeIfEnabled(Features.DIRT, ChiselBlocks.dirt);
 
-		if (Configurations.featureEnabled("emeraldBlock")) {
-			registerFacade(ModBlocks.emerald);
-		}
+		registerFacadeIfEnabled(Features.EMERALD_BLOCK, ChiselBlocks.emerald_block);
 
-		if (Configurations.featureEnabled("netherBrick")) {
-			registerFacade(ModBlocks.netherBrick);
-		}
+		registerFacadeIfEnabled(Features.FACTORY, ChiselBlocks.factoryblock);
 
-		if (Configurations.featureEnabled("netherRack")) {
-			registerFacade(ModBlocks.netherrack);
-		}
+		registerFacadeIfEnabled(Features.FANTASY, ChiselBlocks.fantasyblock);
 
-		if (Configurations.featureEnabled("cobblestoneMossy")) {
-			registerFacade(ModBlocks.cobblestoneMossy);
-		}
+		registerFacadeIfEnabled(Features.FANTASY2, ChiselBlocks.fantasyblock2);
 
-		if (Configurations.featureEnabled("stoneBrick")) {
-			registerFacade(ModBlocks.stoneBrick);
-		}
+		registerFacadeIfEnabled(Features.FUTURA, ChiselBlocks.futura);
 
-		if (Configurations.featureEnabled("snakestone")) {
-			registerFacade(ModBlocks.snakestone);
-		}
+		registerFacadeIfEnabled(Features.GLASS, ChiselBlocks.glass);
 
-		if (Configurations.featureEnabled("dirt")) {
-			registerFacade(ModBlocks.dirt);
-		}
+		registerFacadeIfEnabled(Features.GLASS_PANE, ChiselBlocks.glass_pane);
 
-		// Can't register Ice or Ice Pillars because they have
-		// getRenderType() == 0. BuildCraft tries to add Facades for blocks with
-		// this renderType on its own, but it doesn't work properly with
+		registerFacadeIfEnabled(Features.GLASS_STAINED, ChiselBlocks.stainedGlass);
+
+		registerFacadeIfEnabled(Features.GLASS_STAINED_PANE, ChiselBlocks.stainedGlassPane);
+
+		registerFacadeIfEnabled(Features.GLOWSTONE, ChiselBlocks.glowstone);
+
+		registerFacadeIfEnabled(Features.GOLD_BLOCK, ChiselBlocks.gold_block);
+
+		registerFacadeIfEnabled(Features.GRANITE, ChiselBlocks.granite);
+
+		registerFacadeIfEnabled(Features.GRIMSTONE, ChiselBlocks.grimstone);
+
+		registerFacadeIfEnabled(Features.HEX_PLATING, ChiselBlocks.hexPlating);
+
+		registerFacadeIfEnabled(Features.HOLYSTONE, ChiselBlocks.holystone);
+
+		// Can't register Ice or Ice Pillars because they have getRenderType() == 0.
+		// BuildCraft tries to add Facades for blocks with this renderType on its own, but it doesn't work properly with
 		// Chisel's Ice blocks.
 
-		if (Configurations.featureEnabled("wood")) {
-			for (int i = 0; i < ModBlocks.planks.length; i++) {
-				registerFacade(ModBlocks.planks[i]);
+		// Ignore Ice Stairs because they use the same textures as the full block version
+
+		registerFacadeIfEnabled(Features.IRON_BARS, ChiselBlocks.iron_bars);
+
+		registerFacadeIfEnabled(Features.IRON_BLOCK, ChiselBlocks.iron_block);
+
+		// Ignore Jack o'Lanterns because BuildCraft registers them itself
+
+		registerFacadeIfEnabled(Features.LABORATORY, ChiselBlocks.laboratoryblock);
+
+		registerFacadeIfEnabled(Features.LAPIS_BLOCK, ChiselBlocks.lapis_block);
+
+		registerFacadeIfEnabled(Features.LAVASTONE, ChiselBlocks.lavastone);
+
+		registerFacadeIfEnabled(Features.LEAVES, ChiselBlocks.leaves);
+
+		registerFacadeIfEnabled(Features.LIMESTONE, ChiselBlocks.limestone);
+
+		// Ignore Limestone Slabs and Stairs because they use the same textures as the full block version
+
+		registerFacadeIfEnabled(Features.MARBLE, ChiselBlocks.marble);
+
+		registerFacadeIfEnabled(Features.MARBLE, ChiselBlocks.marble_slab);
+
+		// Ignore Marble Stairs because they use the same textures as the slab version
+
+		if (Features.MARBLE_PILLAR.enabled()) {
+			if (Configurations.oldPillars) {
+				// Old Pillar blocks work, old Pillar slabs are broken
+				registerFacade(ChiselBlocks.marble_pillar);
+				Logger.info("Old pillars enabled, adding Pillar block Facades");
+			} else {
+				// New Pillar blocks are broken, new Pillar slabs work
+				registerFacade(ChiselBlocks.marble_pillar_slab);
+				Logger.info("Old pillars disabled, adding Pillar slab Facades");
 			}
 		}
 
-		if (Configurations.featureEnabled("obsidian")) {
-			registerFacade(ModBlocks.obsidian);
+		registerFacadeIfEnabled(Features.NETHER_BRICK, ChiselBlocks.nether_brick);
+
+		registerFacadeIfEnabled(Features.NETHER_RACK, ChiselBlocks.netherrack);
+
+		registerFacadeIfEnabled(Features.OBSIDIAN, ChiselBlocks.obsidian);
+
+		// Can't register Packed Ice blocks or pillars due to their renderType (see reasoning for regular Ice).
+
+		registerFacadeIfEnabled(Features.PAPER_WALL, ChiselBlocks.paperwall);
+
+		// Ignore Presents because they only show the vanilla Oak Wood Planks texture as Facades
+
+		// Ignore Pumpkins because BuildCraft registers them itself
+
+		// Ignore Quartz because Chisel doesn't add new variations, it only cycles through existing ones
+
+		// Ignore Railcraft blocks because Chisel doesn't add new variations, it only cycles through existing ones
+
+		registerFacadeIfEnabled(Features.REDSTONE_BLOCK, ChiselBlocks.redstone_block);
+
+		if (Features.ROAD_LINE.enabled()) {
+			// Looks weird because it's not a full block, but it doesn't look broken
+			sendFacadeMessage(ChiselBlocks.road_line, 0);
 		}
 
-		if (Configurations.featureEnabled("snakestoneObsidian")) {
-			registerFacade(ModBlocks.obsidianSnakestone);
-		}
+		registerFacadeIfEnabled(Features.SANDSTONE, ChiselBlocks.sandstone);
 
-		if (Configurations.featureEnabled("ironBars")) {
-			registerFacade(ModBlocks.paneIron);
-		}
+		registerFacadeIfEnabled(Features.SANDSTONE_SCRIBBLES, ChiselBlocks.sandstone_scribbles);
 
-		if (Configurations.featureEnabled("redstoneBlock")) {
-			registerFacade(ModBlocks.redstone);
-		}
+		// Ignore Smashing Rock because it's not a block
 
-		if (Configurations.featureEnabled("holystone")) {
-			registerFacade(ModBlocks.holystone);
-		}
+		registerFacadeIfEnabled(Features.SNAKE_SANDSTONE, ChiselBlocks.sand_snakestone);
 
-		if (Configurations.featureEnabled("lavastone")) {
-			registerFacade(ModBlocks.lavastone);
-		}
+		registerFacadeIfEnabled(Features.SNAKESTONE, ChiselBlocks.stone_snakestone);
 
-		if (Configurations.featureEnabled("fantasy")) {
-			registerFacade(ModBlocks.fantasy);
-		}
+		registerFacadeIfEnabled(Features.SNAKESTONE_OBSIDIAN, ChiselBlocks.obsidian_snakestone);
 
-		if (Configurations.featureEnabled("carpet")) {
-			registerFacade(ModBlocks.carpet);
-		}
+		registerFacadeIfEnabled(Features.STONE_BRICK, ChiselBlocks.stonebricksmooth);
 
-		if (Configurations.featureEnabled("bookshelf")) {
-			registerFacade(ModBlocks.bookshelf);
-		}
+		registerFacadeIfEnabled(Features.TECHNICAL, ChiselBlocks.technical);
+		registerFacadeIfEnabled(Features.TECHNICAL, ChiselBlocks.technical2);
 
-		if (Configurations.featureEnabled("futuristicArmorPlating")) {
-			registerFacade(ModBlocks.tyrian);
-		}
+		registerFacadeIfEnabled(Features.TEMPLE_BLOCK, ChiselBlocks.templeblock);
 
-		if (Configurations.featureEnabled("templeBlock")) {
-			registerFacade(ModBlocks.temple);
+		registerFacadeIfEnabled(Features.TEMPLE_BLOCK_MOSSY, ChiselBlocks.mossy_templeblock);
 
-			if (Configurations.featureEnabled("templeBlockMossy")) {
-				registerFacade(ModBlocks.templeMossy);
-			}
-		}
+		// Ignore Twilight Forest blocks because Chisel doesn't add new variations, it only cycles through existing ones
 
-		if (Configurations.featureEnabled("cloud")) {
-			registerFacade(ModBlocks.cloud);
-		}
+		registerFacadeIfEnabled(Features.TYRIAN, ChiselBlocks.tyrian);
 
-		if (Configurations.featureEnabled("factory")) {
-			registerFacade(ModBlocks.factory);
-		}
+		registerFacadeIfEnabled(Features.VOIDSTONE, ChiselBlocks.voidstone);
+		registerFacadeIfEnabled(Features.VOIDSTONE, ChiselBlocks.voidstone2);
 
-		if (Configurations.featureEnabled("glassStained"))
-			for (int i = 0; i < ModBlocks.stainedGlass.length; i++) {
-				registerFacade(ModBlocks.stainedGlass[i]);
-			}
+		// Can't register Voidstone Pillars due to their renderType (see reasoning for Ice).
 
-		if (Configurations.featureEnabled("paperWall")) {
-			registerFacade(ModBlocks.paperWall);
-		}
+		registerFacadeIfEnabled(Features.WATERSTONE, ChiselBlocks.waterstone);
 
-		if (Configurations.featureEnabled("woolenClay")) {
-			registerFacade(ModBlocks.woolenClay);
-		}
+		registerFacadeIfEnabled(Features.WOOD, ChiselBlocks.planks);
 
-		if (Configurations.featureEnabled("laboratory")) {
-			registerFacade(ModBlocks.laboratory);
-		}
-
-		if (Configurations.featureEnabled("pumpkin")) {
-			for (int i = 0; i < ModBlocks.pumpkin.length; i++){
-				registerFacade(ModBlocks.pumpkin[i]);
-			}
-		}
-
-		if(Configurations.featureEnabled("jackolantern"))
-		{
-			for (int i = 0; i < ModBlocks.jackolantern.length; i++){
-				registerFacade(ModBlocks.jackolantern[i]);
-			}
-		}
-
-		if(Configurations.featureEnabled("leaves")){
-			registerFacade(ModBlocks.leaf);
-		}
-
-		// Can't create Facades for Presents/Chests because they have a non-1.0 bounding box
-
-		if (Configurations.featureEnabled("voidstone")) {
-			registerFacade(ModBlocks.voidstone);
-			registerFacade(ModBlocks.voidstone2);
-		}
-
-		// BuildCraft automatically adds Void Stone Pillar Facades
-
-		if (Configurations.featureEnabled("waterstone")) {
-			registerFacade(ModBlocks.waterstone);
-		}
-
-		if(Configurations.featureEnabled("hexPlating")){
-			registerFacade(ModBlocks.hexPlating);
-		}
-
-		if(Configurations.featureEnabled("fantasy2")){
-			registerFacade(ModBlocks.fantasy2);
-		}
-
-		if(Configurations.featureEnabled("grimstone")){
-			registerFacade(ModBlocks.grimstone);
-		}
-
-		if(Configurations.featureEnabled("technical")){
-			registerFacade(ModBlocks.technical);
-			registerFacade(ModBlocks.technical2);
-		}
-
-		if(Configurations.featureEnabled("bone")){
-			registerFacade(ModBlocks.bone);
-		}
-
-		if(Configurations.featureEnabled("scorching"))
-		{
-			registerFacade(ModBlocks.scorching);
-		}
-
-		if(Configurations.featureEnabled("brickCustom"))
-		{
-			registerFacade(ModBlocks.brickCustom);
-		}
-
-		// Can't create Facades for Torches because they have a non-1.0 bounding box
-
-		if(Configurations.featureEnabled("warningSign"))
-		{
-			registerFacade(ModBlocks.sign);
-		}
-
-		if(Configurations.featureEnabled("arcane") && Loader.isModLoaded("Thaumcraft"))
-		{
-			registerFacade(ModBlocks.arcane);
-		}
+		registerFacadeIfEnabled(Features.WOOLEN_CLAY, ChiselBlocks.woolen_clay);
 
 		if (writer != null) {
 			writer.close();
