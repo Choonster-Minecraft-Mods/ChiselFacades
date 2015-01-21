@@ -1,6 +1,7 @@
 package com.choonster.chiselfacades;
 
 import com.cricketcraft.chisel.Features;
+import com.cricketcraft.chisel.api.ICarvable;
 import com.cricketcraft.chisel.api.carving.ICarvingGroup;
 import com.cricketcraft.chisel.api.carving.ICarvingVariation;
 import com.cricketcraft.chisel.carving.Carving;
@@ -19,6 +20,7 @@ public class FacadeCreator {
 	private static int _numFacades = 0;
 	private static PrintWriter writer;
 
+	// Send an IMC message to BuildCraft to register the block + metadata as a Facade
 	private static void sendFacadeMessage(Block block, int meta) {
 		ItemStack stack = new ItemStack(block, 1, meta);
 
@@ -32,6 +34,7 @@ public class FacadeCreator {
 		_numFacades++;
 	}
 
+	// Register the variations in the group as Facades
 	private static void registerGroup(String groupName) {
 		ICarvingGroup group = Carving.chisel.getGroup(groupName);
 
@@ -48,9 +51,22 @@ public class FacadeCreator {
 		}
 	}
 
+	// Register the ICarvingVariations in the ICarvingGroup as Facades if the Feature is enabled
 	private static void registerGroupIfEnabled(Features feature, String groupName) {
 		if (feature.enabled()) {
 			registerGroup(groupName);
+		}
+	}
+
+	// Register any metadata values of the block that have an associated ICarvingVariation if the Feature is enabled
+	// Used for blocks like Anti Block and Carpet that don't have an ICarvingGroup
+	private static <T extends Block & ICarvable> void  registerBlockIfEnabled(Features feature, T block){
+		if (feature.enabled()) {
+			for (int meta = 0; meta < 16; meta++) {
+				if (block.getVariation(new ItemStack(block, 1, meta)) != null){
+					sendFacadeMessage(block, meta);
+				}
+			}
 		}
 	}
 
@@ -77,7 +93,7 @@ public class FacadeCreator {
 
 		registerGroupIfEnabled(Features.ANDESITE, "andesite");
 
-		registerGroupIfEnabled(Features.ANTIBLOCK, "antiBlock");
+		registerBlockIfEnabled(Features.ANTIBLOCK, ChiselBlocks.antiBlock);
 
 		registerGroupIfEnabled(Features.ARCANE, "arcane");
 
@@ -94,11 +110,7 @@ public class FacadeCreator {
 		registerGroupIfEnabled(Features.BRICK_CUSTOM, "brickCustom");
 
 		// Carpets can't be chiseled, so they don't have a ICarvingGroup to register
-		if (Features.CARPET.enabled()) {
-			for (int meta = 0; meta < 16; meta++) {
-				sendFacadeMessage(ChiselBlocks.carpet_block, meta);
-			}
-		}
+		registerBlockIfEnabled(Features.CARPET, ChiselBlocks.carpet_block);
 
 		// Ignore Floor Carpets because they use the same textures as the full block version
 
