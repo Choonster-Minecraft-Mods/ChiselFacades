@@ -1,13 +1,10 @@
 package com.choonster.chiselfacades;
 
 import com.cricketcraft.chisel.Features;
-import com.cricketcraft.chisel.api.ICarvable;
 import com.cricketcraft.chisel.api.carving.ICarvingGroup;
 import com.cricketcraft.chisel.api.carving.ICarvingVariation;
 import com.cricketcraft.chisel.carving.Carving;
 import com.cricketcraft.chisel.config.Configurations;
-import com.cricketcraft.chisel.init.ChiselBlocks;
-import com.cricketcraft.chisel.utils.General;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import net.minecraft.block.Block;
@@ -30,7 +27,7 @@ public class FacadeCreator {
 			String blockName = Block.blockRegistry.getNameForObject(block);
 			boolean fullBoundingBox =
 					block.getBlockBoundsMinX() == 0.0 && block.getBlockBoundsMinY() == 0.0 && block.getBlockBoundsMinZ() == 0.0 &&
-					block.getBlockBoundsMaxX() == 1.0 && block.getBlockBoundsMaxY() == 1.0 && block.getBlockBoundsMaxZ() == 1.0;
+							block.getBlockBoundsMaxX() == 1.0 && block.getBlockBoundsMaxY() == 1.0 && block.getBlockBoundsMaxZ() == 1.0;
 
 			writer.printf("%s - %s - %b - %d - %s\n", blockName, block.toString(), fullBoundingBox, meta, stack.getHasSubtypes());
 		}
