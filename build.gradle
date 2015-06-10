@@ -17,13 +17,24 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-2.10-cricket"
-group= "com.choonster.chiselfacades" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "ChiselFacades"
+version = "${mc_version}-${mod_version}"
+group= "${package_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "${mod_name}"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "${mc_version}-${forge_version}"
     runDir = "run"
+
+    if (project.hasProperty('mappings_version'))
+        mappings = project.mappings_version
+}
+
+repositories {
+    maven { url = "http://coloredlightscore.us.to/maven/chisel-2-dev/" }
+}
+
+dependencies {
+    compile "com.cricketcraft.chisel:Chisel2:${chisel_version}:deobf"
 }
 
 processResources
