@@ -103,7 +103,7 @@ public class FacadeCreator {
 
 		// Ignore Presents because they only show the vanilla Oak Wood Planks texture as Facades
 
-		registerGroupIfEnabled(Features.ROAD_LINE, "road_line");
+		// Ignore Road Lines because they use Material.circuits. BuildCraft rejects any Block with a Material that returns false from Material#blocksMovement.
 
 		// Torches have 1.0 block bounds by default, so we don't need to register them
 
