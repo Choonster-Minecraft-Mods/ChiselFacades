@@ -1,14 +1,14 @@
 package com.choonster.chiselfacades;
 
-import com.cricketcraft.chisel.Features;
 import com.cricketcraft.chisel.api.carving.ICarvingGroup;
 import com.cricketcraft.chisel.api.carving.ICarvingVariation;
-import com.cricketcraft.chisel.carving.Carving;
-import com.cricketcraft.chisel.config.Configurations;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import team.chisel.Features;
+import team.chisel.carving.Carving;
+import team.chisel.config.Configurations;
 
 import java.io.PrintWriter;
 

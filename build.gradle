@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 
 version = "${mc_version}-${mod_version}"
-group= "${package_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "${package_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${mod_name}"
 
 minecraft {
@@ -30,18 +30,30 @@ minecraft {
 }
 
 repositories {
-    maven { url = "http://coloredlightscore.us.to/maven/chisel-2-dev/" }
+    maven {
+        name = "Chisel Repo"
+        url = "http://maven.tterrag.com/"
+    }
     ivy {
-        name "BuildCraft"
+        name "BuildCraft Repo"
         artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
     }
-    maven { url = "http://mobiusstrip.eu/maven" }
-    maven { url = "http://chickenbones.net/maven/" }
+    maven {
+        name = "Prof Mobius Repo"
+        url = "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name = "Chicken Bones Repo"
+        url = "http://chickenbones.net/maven/"
+    }
 }
 
 dependencies {
-    compile "com.cricketcraft.chisel:Chisel2:${chisel_version}:deobf"
-    runtime name: "buildcraft", version: "${buildcraft_version}", classifier: "dev"
+    compile "team.chisel.ctmlib:CTMLib:MC${mc_version}-${ctmlib_version}:deobf"
+    compile "team.chisel.ctmlib:CTMLib:MC${mc_version}-${ctmlib_version}:sources"
+    compile "team.chisel:Chisel:${chisel_version}:deobf"
+    compile "team.chisel:Chisel:${chisel_version}:sources"
+    runtime group: "buildcraft", name: "buildcraft", version: "${buildcraft_version}", classifier: "dev"
     runtime "mcp.mobius.waila:Waila:${waila_version}"
     runtime "codechicken:CodeChickenCore:${mc_version}-${ccc_version}:dev"
     runtime "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:dev"
@@ -49,24 +61,24 @@ dependencies {
 }
 
 processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version': project.version, 'mcversion': project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
 
 // Fix resources not being loaded in IDEA
 // http://www.minecraftforge.net/forum/index.php/topic,32467.msg169687.html#msg169687

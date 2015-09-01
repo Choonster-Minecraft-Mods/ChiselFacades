@@ -10,6 +10,7 @@ libs/*.jar
 *.iml
 *.ipr
 *.iws
+out/
 
 # =========================
 # Operating System Files
